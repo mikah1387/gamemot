@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}On joue !{% endblock %}
+
+{% block body %}
+<section class="main games">
+
+ <div class="container">
+
+{{word.word}}
+  {# {{ form_start(formword) }}
+  
+      {% for field in formword %}
+          {{ form_widget(field) }}
+      {% endfor %}
+  </div>
+  <button class="btn">Submit</button>
+{{ form_end(formword) }} #}
+ 
+</div>
+</section>
+{% endblock %}

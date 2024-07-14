@@ -1,0 +1,45 @@
+.container{
+
+    width: 70%;
+
+    form{
+        width: 100%;
+       
+
+
+            display: flex;
+            height: auto;
+            justify-content: center;
+            align-items: center;
+           
+            input{
+
+                width: 60px;
+                height: 60px;
+                background-color: $blue;
+                color: white;
+                font-size: 3rem;
+                font-weight: 600;
+                text-align: center;
+                // border: 0.5px solid white;
+                border: none;
+                margin-right: 1px;
+                outline: none;
+
+                transition: 0.3s all ease  ;
+               &:focus{
+                border: 3px Solid rgb(30, 91, 183);
+               }
+               &.correct{
+                background: red;
+               }
+               &.misplaced{
+                background: yellow;
+               }
+     
+             }
+
+
+}
+
+}

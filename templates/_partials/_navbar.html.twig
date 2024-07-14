@@ -1,0 +1,40 @@
+<header>
+
+
+    <nav class="navbar">
+
+         <div class="logo">
+            <p>le jeu motus</p>
+         </div>
+         
+         <ul>
+
+
+            <li> <a href="{{ path('main')}}"> <span class="material-symbols-outlined">
+                home
+                </span> Acceuil</a></li>
+            {% if app.user %}
+
+            <li> <a href="">   <span class="material-symbols-outlined">
+                person
+                </span> {{ app.user.userIdentifier }}</a></li>
+
+            <li>  <a href="{{path('app_logout')}}"> <span class="material-symbols-outlined">
+                power_settings_new
+                </span>  Se deconnecter</a> </li> 
+
+                {% else %}
+                <li> <a href="{{ path('register')}}"><span class="material-symbols-outlined">
+                    app_registration
+                    </span> S'inscrire </a></li>
+                  <li> <a href="{{ path('app_login')}}">   <span class="material-symbols-outlined">
+                    person
+                    </span> Se connecter</a></li>
+            {% endif %} 
+
+
+
+ 
+         </ul>
+    </nav>
+</header>

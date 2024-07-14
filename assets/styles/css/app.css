@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 17px;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.btn {
+  padding: 10px 30px;
+  display: inline-block;
+  margin-top: 20px;
+  border: 1px solid rgb(53, 145, 221);
+  color: rgb(53, 145, 221);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn:hover {
+  background-color: rgb(53, 145, 221);
+  color: white;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: rgb(53, 145, 221);
+  color: white;
+}
+.navbar .logo p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 20px;
+}
+.navbar ul {
+  display: flex;
+  list-style: none;
+  margin-right: 20px;
+  justify-content: space-around;
+  align-items: center;
+}
+.navbar ul li {
+  padding: 20px 30px;
+  transition: 0.3s;
+}
+.navbar ul li a {
+  position: relative;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+.navbar ul li a span {
+  font-size: 1.3rem;
+  display: inline-block;
+  position: absolute;
+  top: -2px;
+  left: -26px;
+}
+.navbar ul li:hover {
+  background-color: white;
+  cursor: pointer;
+}
+.navbar ul li:hover a {
+  color: rgb(53, 145, 221);
+}
+
+.main {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.container {
+  width: 70%;
+}
+.container form {
+  width: 100%;
+  display: flex;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+}
+.container form input {
+  width: 60px;
+  height: 60px;
+  background-color: rgb(53, 145, 221);
+  color: white;
+  font-size: 3rem;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  margin-right: 1px;
+  outline: none;
+  transition: 0.3s all ease;
+}
+.container form input:focus {
+  border: 3px Solid rgb(30, 91, 183);
+}
+.container form input.correct {
+  background: red;
+}
+.container form input.misplaced {
+  background: yellow;
+}/*# sourceMappingURL=app.css.map */

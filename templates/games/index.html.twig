@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}On joue !{% endblock %}
+
+{% block body %}
+<section class="main games">
+
+    <ul>
+        <li class="btn"><a href="{{ path('games_diff',{difficultty:'easy'}) }}" >Facile</li>
+        <li class="btn"><a href="{{ path('games_diff',{difficultty:'medium'}) }}" >Moyen</li>
+        <li class="btn"><a href="{{path('games_diff',{difficultty:'hard'}) }}" >difificile</li>
+    </ul>
+</section>
+{% endblock %}

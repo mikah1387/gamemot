@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acceuil{% endblock %}
+
+{% block body %}
+
+<section class="main">
+
+    <div class="content_main">
+    <h1>Bienvenue dans le jeu motus</h1>
+
+    {% if app.user %}
+      <a href="{{path('games_index')}}" class="btn">Start</a>
+      {% else %}
+      <p>vous devez se connecter pour commencer</p>
+    {% endif %}
+
+</div>
+</section>
+
+
+{% endblock %}
