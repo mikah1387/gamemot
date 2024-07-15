@@ -23,16 +23,45 @@ a {
   padding: 10px 30px;
   display: inline-block;
   margin-top: 20px;
-  border: 1px solid rgb(53, 145, 221);
-  color: rgb(53, 145, 221);
+  border: 1px solid #3591dd;
+  color: #3591dd;
   text-decoration: none;
   border-radius: 5px;
   font-weight: 600;
   transition: 0.3s;
 }
 .btn:hover {
-  background-color: rgb(53, 145, 221);
+  background-color: #3591dd;
   color: white;
+}
+
+.flash {
+  width: 70%;
+  height: 50px;
+  margin: 50px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.success {
+  background: lightgreen;
+  border: 1px solid green;
+  color: green;
+}
+.success p {
+  font-size: calc(0.8rem + 0.5vw);
+}
+
+.alert {
+  background: #d8c3c2;
+  border: 1px solid #58181f;
+  color: #58181f;
+}
+.alert p {
+  font-size: calc(0.8rem + 0.5vw);
 }
 
 .navbar {
@@ -40,7 +69,7 @@ a {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: rgb(53, 145, 221);
+  background-color: #3591dd;
   color: white;
 }
 .navbar .logo p {
@@ -77,47 +106,58 @@ a {
   cursor: pointer;
 }
 .navbar ul li:hover a {
-  color: rgb(53, 145, 221);
+  color: #3591dd;
 }
 
 .main {
   min-height: 100vh;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 40px;
 }
 
 .container {
-  width: 70%;
+  width: 80%;
 }
 .container form {
   width: 100%;
+  margin-top: 30px;
   display: flex;
   height: auto;
   justify-content: center;
   align-items: center;
 }
 .container form input {
-  width: 60px;
-  height: 60px;
-  background-color: rgb(53, 145, 221);
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(171deg, rgb(171, 223, 250) 12%, rgba(53, 161, 221, 0.9724264706) 51%);
   color: white;
   font-size: 3rem;
   font-weight: 600;
   text-align: center;
   border: none;
-  margin-right: 1px;
   outline: none;
   transition: 0.3s all ease;
 }
 .container form input:focus {
   border: 3px Solid rgb(30, 91, 183);
 }
-.container form input.correct {
-  background: red;
-}
 .container form input.misplaced {
-  background: yellow;
+  background: linear-gradient(171deg, rgb(250, 247, 202) 14%, rgba(213, 200, 50, 0.9724264706) 51%);
+  color: white;
+  border-radius: 50%;
+}
+.container form input.correct {
+  background: linear-gradient(171deg, rgb(249, 197, 197) 23%, rgba(221, 53, 53, 0.9724264706) 51%);
+  color: white;
+}
+.container form span {
+  margin-right: 3px;
+  background: linear-gradient(171deg, rgb(171, 223, 250) 12%, rgba(53, 161, 221, 0.9724264706) 51%);
+}
+.container form .btn {
+  margin: 0 30px;
 }/*# sourceMappingURL=app.css.map */

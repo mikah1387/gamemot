@@ -6,28 +6,56 @@ use App\Entity\Games;
 use App\Entity\Words;
 use App\Form\LetterType;
 use App\Repository\WordsRepository;
+use App\service\ApiService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Constraints\Length;
+
 #[Route('/games', name: 'games_')]
 
 class GamesController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
-    {
+    public function index(ApiService $api, EntityManagerInterface $em,
+    WordsRepository $wordsRepo): Response
+    {    
 
+         $wordsdatas=$wordsRepo->findAll();
+        //  dd($wordsdatas);
+         if(empty($wordsdatas)){
+            $words = $api->fetchWords(5);
+            foreach ($words as $data) {
+              
+                   $word = new Words();
+                   $word->setWord($data['name']);
+                   if (strlen($data['name']) >= 5 && strlen($data['name']) <= 6) {
+                       $word->setDifficulty('easy');
+                   } elseif (strlen($data['name']) >= 7 && strlen($data['name']) <= 8) {
+                       $word->setDifficulty('medium');
+                   }   elseif (strlen($data['name']) >= 9 
+                   ) {
+                       $word->setDifficulty('hard');
+                   }
+   
+                   $em->persist($word);
+               
+               
+                  }
+                  $em->flush();
+                  $this->addFlash('success', 'les mots ont bien été chargés');
 
-        return $this->render('games/index.html.twig', [
-            'controller_name' => 'GamesController',
-        ]);
+         }
+
+         
+        return $this->render('games/index.html.twig',['words' => $wordsdatas]);
     }
 
     #[Route('/{difficultty}', name: 'diff')]
     public function difficultty(WordsRepository $wordsRepo, string $difficultty,
-     Request $request,
      EntityManagerInterface $em): Response
     {
          $allwords = $wordsRepo->findBy(['difficulty'=>$difficultty] );
@@ -35,10 +63,6 @@ class GamesController extends AbstractController
           $keyword = array_rand($allwords);
           $shooseWord = $allwords[$keyword ];
         //   dd($shooseWord);
-          
-          
-        //   $keyword = array_rand($words);
-        //   $wordValue = $words[$keyword ];
 
           $game = new Games();
           $game->setWord( $shooseWord);
@@ -49,7 +73,7 @@ class GamesController extends AbstractController
           
           $em->persist($game);
           $em->flush();
-          $this->addFlash('success', 'Game Started');
+          $this->addFlash('success', 'devenez !');
           return  $this->redirectToRoute('games_show', ['id' => $game->getId()]);
         
         //   $form = $this->createForm(LetterType::class, null, ['word_length' => strlen($wordValue)]);
@@ -70,27 +94,88 @@ class GamesController extends AbstractController
 
     #[Route('/game/{id}', name: 'show')]
     public function startGame(Games $game,
-     Request $request): Response
+     Request $request, EntityManagerInterface $em): Response
     {
             $EnWord = $game->getWord();
             $word = $EnWord->getWord();
+            // dd(strlen($word));
             $form = $this->createForm(LetterType::class, null, ['word_length' => strlen($word)]);
-            $form['letter0']->setData($word[0]);
+             $result= $request->get('resultat');
+             $attemptWord=$request->get('attemptWord');
+             if (!empty($result))  {
+                foreach ($result as $key => $value) {
+                
+                    if ($value == 'correct'){
+                     $letter = $form->get('letter'.$key);
+                     $options = $letter->getConfig()->getOptions();
+                     $options['attr']['class'] .= ' correct';
+                     $options['data'] = $attemptWord[$key];
+                     $form->add('letter'.$key, TextType::class, $options);
+                    //  $letter->setData($word[$key]);                        
+                    }
+                    if ($value == 'misplaced'){
+                        $letter = $form->get('letter'.$key);
+                        $options = $letter->getConfig()->getOptions();
+                        $options['attr']['class'] .= ' misplaced';
+                        $options['data'] = $attemptWord[$key];
+                        $form->add('letter'.$key, TextType::class, $options);
+                       //  $letter->setData($word[$key]);                        
+                       }
+    
+                 }
+             }
+
+             
+            $form->get('letter0')->setData($word[0]);
+            $form->get('letter'.strlen($word)-1)->setData($word[strlen($word)-1]);
+            // $form->get('letter0')->setData($word[]);
+           
 
              $form->handleRequest($request);
              
              if ($form->isSubmitted() && $form->isValid()) {
-
-            $letters = $form->getData();
-            $attemptWord = implode('', $letters);
+              
+             $game->setAttempts($game->getAttempts() + 1);
+             $letters = $form->getData();
+             $attemptWord = implode('', $letters);
            
-            $result = $this->checkWord($attemptWord, $word);
-            dd($result);
-          }
+             $result = $this->checkWord($attemptWord, $word);
+             
+          
+             if(!in_array('misplaced', $result) && !in_array('incorrect', $result)){
+                $game->setStatus('won');
+                $game->setScore(1);
+                $em-> persist($game);
+                $em->flush();
+                $this->addFlash('success', 'bravo! vous avez gagné');
+                return  $this->redirectToRoute('games_index');
+            
+             }else if ($game->getAttempts()< 6) {
+                // $game->setAttempts($game->getAttempts() + 1);
+                $game->setStatus('in_progress');
+                $em-> persist($game);
+                $em->flush();
+                $this->addFlash('alert', ' reessayez !');
+  
+                return  $this->redirectToRoute('games_show', [
+                    'id' => $game->getId(),
+                    'resultat' => $result,
+                    'attemptWord'=>$attemptWord]);
+             }else{
+             
+                $game->setStatus('lost');
+                $em-> persist($game);
+                $em->flush();
+                $this->addFlash('alert', 'vous avez perdu');
+  
+                return  $this->redirectToRoute('games_index');
+             }
+             }
    
         return $this->render('games/show.html.twig', [
             'word' => $word,
-            'form' => $form
+            'form' => $form,
+            'numbreAttempts' => $game->getAttempts()+1,
         ]);
     }
 
@@ -98,9 +183,13 @@ class GamesController extends AbstractController
     {
      
         $result = [];
+        $attemptWord = strtolower($attemptWord);
+        $correctWord = strtolower($correctWord);
         for ($i = 0; $i < strlen($attemptWord); $i++) {
             if ($attemptWord[$i] === $correctWord[$i]) {
                 $result[] = 'correct';
+
+
             } elseif (strpos($correctWord, $attemptWord[$i]) !== false) {
                 $result[] = 'misplaced';
             } else {

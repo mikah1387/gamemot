@@ -19,7 +19,9 @@ class LetterType extends AbstractType
             
                 'attr' => [
                     'maxlength' => 1,
-                    'class' => 'letter-input'
+                    'class' => 'letter',
+                    'style' => 'text-transform: uppercase;'
+                   
                 ],
             ]);
         }

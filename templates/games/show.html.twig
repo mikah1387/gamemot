@@ -5,6 +5,9 @@
 {% block body %}
 <section class="main games">
 
+    <div class="tentative">
+       <span class="btn">tentative {{numbreAttempts}} </span> 
+    </div>
     <div class="container">
 
         
@@ -13,11 +16,13 @@
         {% for field in form %}
 
         
-        {{ form_widget(field) }}
+       <span>{{ form_widget(field) }}</span> 
         {% endfor %}
+
+        <button class="btn">Jouez</button>
+        {{ form_end(form) }}
     </div>
-    <button class="btn">Submit</button>
-    {{ form_end(form) }}
+ 
 
     </div>
 </section>

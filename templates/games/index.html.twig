@@ -4,6 +4,12 @@
 
 {% block body %}
 <section class="main games">
+     <ul>
+
+    {# {% if words is not empty %}
+        <p> les mots sont dejas chargés</p>
+    {% endif %} #}
+     </ul>
 
     <ul>
         <li class="btn"><a href="{{ path('games_diff',{difficultty:'easy'}) }}" >Facile</li>
