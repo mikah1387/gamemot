@@ -22,7 +22,7 @@ Assurez-vous d'avoir les éléments suivants installés sur votre machine :
 2. Accédez au répertoire du projet :
 
     ```bash
-    cd mon-projet-symfony
+    cd gamemot
     ```
 
 3. Installez les dépendances du projet avec Composer :
