@@ -42,7 +42,7 @@ class GamesController extends AbstractController
                    ) {
                        $word->setDifficulty('hard');
                    }
-   
+                   $word->setWordlength(strlen($worWithoutAcc));
                    $em->persist($word);
                
                

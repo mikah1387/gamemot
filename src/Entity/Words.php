@@ -27,6 +27,9 @@ class Words
     #[ORM\OneToMany(targetEntity: Games::class, mappedBy: 'word', orphanRemoval: true)]
     private Collection $games;
 
+    #[ORM\Column]
+    private ?int $wordlength = null;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
@@ -87,6 +90,18 @@ class Words
                 $game->setWord(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWordlength(): ?int
+    {
+        return $this->wordlength;
+    }
+
+    public function setWordlength(int $wordlength): static
+    {
+        $this->wordlength = $wordlength;
 
         return $this;
     }
