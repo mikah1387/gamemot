@@ -28,15 +28,17 @@ class GamesController extends AbstractController
         //  dd($wordsdatas);
          if(empty($wordsdatas)){
             $words = $api->fetchWords(5);
+            // dd($words);
             foreach ($words as $data) {
               
                    $word = new Words();
-                   $word->setWord($data['name']);
-                   if (strlen($data['name']) >= 5 && strlen($data['name']) <= 6) {
+                   $worWithoutAcc= $this->removeAccents($data['name']);
+                   $word->setWord($worWithoutAcc);
+                   if (strlen($worWithoutAcc) >= 5 && strlen($worWithoutAcc) <= 6) {
                        $word->setDifficulty('easy');
-                   } elseif (strlen($data['name']) >= 7 && strlen($data['name']) <= 8) {
+                   } elseif (strlen($worWithoutAcc) >= 7 && strlen($worWithoutAcc) <= 8) {
                        $word->setDifficulty('medium');
-                   }   elseif (strlen($data['name']) >= 9 
+                   }   elseif (strlen($worWithoutAcc) >= 9 
                    ) {
                        $word->setDifficulty('hard');
                    }
@@ -73,7 +75,7 @@ class GamesController extends AbstractController
           
           $em->persist($game);
           $em->flush();
-          $this->addFlash('success', 'devenez !');
+          $this->addFlash('success', 'devinez!');
           return  $this->redirectToRoute('games_show', ['id' => $game->getId()]);
         
         //   $form = $this->createForm(LetterType::class, null, ['word_length' => strlen($wordValue)]);
@@ -127,7 +129,10 @@ class GamesController extends AbstractController
 
              
             $form->get('letter0')->setData($word[0]);
-            $form->get('letter'.strlen($word)-1)->setData($word[strlen($word)-1]);
+            $form->get('letter'.strlen($word)-3)->setData($word[strlen($word)-3]);
+            if (strlen($word) >= 9) {
+                $form->get('letter'.strlen($word)-1)->setData($word[strlen($word)-1]);
+            }
             // $form->get('letter0')->setData($word[]);
            
 
@@ -198,4 +203,16 @@ class GamesController extends AbstractController
         }
         return $result;
     }
+  
+    private function removeAccents($string) {
+
+        $string = \Normalizer::normalize($string, \Normalizer::FORM_D);
+
+        // Enlever les diacritiques en gardant les caractères ASCII
+        $string = preg_replace('/\p{M}/u', '', $string);
+    
+        
+        return $string;
+    }
+
 }

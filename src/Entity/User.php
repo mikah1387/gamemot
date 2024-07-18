@@ -9,10 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_PSEUDO', fields: ['pseudo'])]
-#[UniqueEntity(fields: ['pseudo'], message: 'There is already an account with this pseudo')]
+#[UniqueEntity(fields: ['pseudo'], message: 'ce pseudo est déja utilise')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,6 +22,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\Length(
+        min: 5,
+        max: 20,
+        minMessage: 'Le pseudo doit contenir au moins {{ limit }} caractères',
+        maxMessage: 'Le pseudo ne doit pas contenir plus de {{ limit }} caractères'
+        )]
     private ?string $pseudo = null;
 
     /**
@@ -33,9 +40,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+
+    #[Assert\Length(
+        min: 8,
+        max: 10,
+        minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères',
+        maxMessage: 'Le mot de passe ne doit pas contenir plus de {{ limit }} caractères'
+    )]
+
     private ?string $password = null;
 
-    #[ORM\Column (length: 20)]
+    #[ORM\Column (length: 100,type:"bigint")]
+    #[Assert\Length(
+        min: 13,
+        max: 15,
+        minMessage: 'Le numéro de sécu doit contenir au moins {{ limit }} chiffres',
+        maxMessage: 'Le numéro de sécu ne doit pas contenir plus de {{ limit }} chiffres'
+      
+    )]
     private ?int $number_secu = null;
 
     /**

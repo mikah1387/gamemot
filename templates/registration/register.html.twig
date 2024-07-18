@@ -3,11 +3,13 @@
 {% block title %}S'inscrire{% endblock %}
 
 {% block body %}
-    <h1>S'inscrire </h1>
+<section class="formsub">
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
+        <h1>S'inscrire </h1>
+
         {{ form_row(registrationForm.pseudo) }}
         {{ form_row(registrationForm.number_secu) }}
         {{ form_row(registrationForm.plainPassword) }}
@@ -15,4 +17,6 @@
 
         <button type="submit" class="btn">S'inscrire</button>
     {{ form_end(registrationForm) }}
+
+</section>
 {% endblock %}

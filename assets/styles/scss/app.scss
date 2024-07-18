@@ -16,25 +16,36 @@ html{
 body {
 
     font-family: "Montserrat", sans-serif;
-
+ 
     background:$white;
+    
+    overflow-x: hidden;
 
 }
 a{
     text-decoration: none;
     color: inherit;
 }
+ul{
+    list-style: none;
+}
 .btn{
 
-    padding: 10px 30px;
-    display: inline-block;
-    margin-top: 20px;
+  
+    display: block;
+    text-align: center;
     border: 1px solid $blue;
     color: $blue;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 30px;
     font-weight: 600;
     transition: 0.3s;
+    padding: calc(10px + 0.3vw) calc(8px + 0.6vw);
+    font-size:calc(0.5rem + 0.4vw) ;
+    font-weight: 600;
+    width: calc(8rem + 3.5vw);
+    min-width: 103px;
+    margin: 20px auto;
     &:hover{
         background-color: $blue;        
         color: $white;
@@ -72,5 +83,7 @@ a{
 
   }
 @import '_navbar.scss';
+@import '_form.scss';
 @import '_main.scss';
 @import '_games.scss';
+@import '_profile.scss';

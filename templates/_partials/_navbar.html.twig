@@ -4,7 +4,7 @@
     <nav class="navbar">
 
          <div class="logo">
-            <p>le jeu motus</p>
+            <p>MOTUS</p>
          </div>
          
          <ul>
@@ -15,7 +15,7 @@
                 </span> Acceuil</a></li>
             {% if app.user %}
 
-            <li> <a href="">   <span class="material-symbols-outlined">
+            <li> <a href="{{ path('profile')}}">   <span class="material-symbols-outlined">
                 person
                 </span> {{ app.user.userIdentifier }}</a></li>
 

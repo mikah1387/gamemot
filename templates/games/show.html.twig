@@ -8,19 +8,24 @@
     <div class="tentative">
        <span class="btn">tentative {{numbreAttempts}} </span> 
     </div>
+
     <div class="container">
 
+     
         
         {{ form_start(form) }}
-
-        {% for field in form %}
-
         
-       <span>{{ form_widget(field) }}</span> 
+        {% for input in form %}
+
+        {{ form_errors(input) }}
+        
+       <span>{{ form_widget(input) }}</span> 
         {% endfor %}
 
         <button class="btn">Jouez</button>
         {{ form_end(form) }}
+       
+
     </div>
  
 

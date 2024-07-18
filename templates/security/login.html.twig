@@ -3,6 +3,7 @@
 {% block title %}Se connecter{% endblock %}
 
 {% block body %}
+<section class="formsub">
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -14,12 +15,15 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
-    <label for="inputPseudo">Votre pseudo</label>
+    <h1 >Se connecter</h1>
+    <div>
+    <label for="inputPseudo"> pseudo :</label>
     <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Mot de passe </label>
+    </div>
+    <div>
+    <label for="inputPassword">Mot de passe : </label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
+    </div>
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
@@ -28,4 +32,5 @@
         Connecter
     </button>
 </form>
+</section>
 {% endblock %}

@@ -1,0 +1,46 @@
+.profile{
+
+    h1{
+        margin-bottom: 50px;
+    }
+.parent{
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    @media screen and (max-width: 1050px) {
+        
+        flex-wrap: wrap;
+         }
+    
+.nombre{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $blue;
+    color: $white;
+    margin: 20px;
+    
+    width: calc(150px + 3vw);
+    height: calc(150px + 3vw);
+    border-radius: 50%;
+    &.gagnes{
+        background-color: $greenhigh;
+    }
+    &.perdus{
+        background-color: $red;
+    }
+    &.nofini{
+        background-color: rgb(222, 222, 65);
+    }
+
+    span{
+        font-weight: 700;
+    }
+
+}
+
+}
+}

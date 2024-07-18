@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+
+<section class="main profile">
+<h1> Bienvenue {{user.pseudo|raw}}</h1> 
+
+<div class="parent">
+  <div class="nombre total">
+
+    <span >Nombre de jeux {{numberGames}} </span>
+  </div>
+  <div class="nombre gagnes">
+
+    <span >jeux gagnés {{numberGamesWon|length}} </span>
+  </div>
+  <div class="nombre perdus">
+
+    <span >jeux perdus {{numberGamesLost|length}} </span>
+  </div>
+  <div class="nombre nofini">
+
+    <span >jeux pas finis {{numberGamesNotFinished|length}} </span>
+  </div>
+</div>
+</section>
+{% endblock %}
