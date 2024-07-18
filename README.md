@@ -44,7 +44,11 @@ Assurez-vous d'avoir les éléments suivants installés sur votre machine :
     ```ini
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
     ```
-
+    Décommenter les deux lignes 
+      ```ini
+     # APP_ENV=dev
+     # APP_SECRET=131baeac035b97fc64f636523929b040
+    ```
 5. Créez la base de données et exécutez les migrations :
 
     ```bash
